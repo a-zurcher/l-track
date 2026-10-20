@@ -99,7 +99,13 @@ class ProjectSelectorView(Screen):
 
     def on_data_table_row_selected(self, event: DataTable.RowSelected):
         project = self.table_rows.get(event.row_key)
+
+        if project is None:
+            self.notify(message="No project selected", title="Error", severity="error", timeout=3)
+            return
+
         self.app.push_screen(TimerView(project))
+
 
     def on_button_pressed(self, event: Button.Pressed):
         if event.button.id == "exit_btn":

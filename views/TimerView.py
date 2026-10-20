@@ -111,7 +111,7 @@ class TimerView(Screen):
         self.toggle_timer_button.label = "Resume" if not self.running else "Pause"
         self.toggle_timer_button.variant = "primary" if not self.running else "default"
 
-    def action_toggle(self, **kwargs):
+    def action_toggle(self, attribute_name: str):
         self.running = not self.running
         self.toggle_timer_set_text()
 
