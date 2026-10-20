@@ -1,7 +1,7 @@
+import datetime
 import os
 import re
 import subprocess
-from datetime import datetime
 
 DATE_FORMAT = '%Y-%m-%d'
 projects_root_account = "Projets"
@@ -44,7 +44,7 @@ class ProjectEntry:
         return f"{projects_root_account}:{self.client}:{date_str} {self.name}"
 
     def to_ledger_entry(self):
-        today = datetime.today().strftime(DATE_FORMAT)
+        today = datetime.datetime.now(tz=datetime.UTC).strftime(DATE_FORMAT)
         ledger_project = self.get_ledger_project_name()
 
         return (
@@ -59,7 +59,7 @@ class ProjectEntry:
 
         result = subprocess.run(
             args=f'ledger -f {ledger_time_file} balance --format "{ledger_format}" "{self.get_ledger_project_name()}"',
-            shell=True, capture_output=True, text=True
+            shell=True, capture_output=True, text=True, check=False
         )
 
         try:
@@ -79,7 +79,7 @@ def parse_project(query: str) -> ProjectEntry:
         raise InvalidProjectEntry(f"Invalid project entry: {query}")
     client, date_str, project = matches[0]
 
-    return ProjectEntry(client, project, datetime.strptime(date_str, DATE_FORMAT))
+    return ProjectEntry(client, project, datetime.datetime.strptime(date_str, DATE_FORMAT).replace(tzinfo=datetime.UTC))
 
 
 def get_projects() -> list[ProjectEntry]:
@@ -92,7 +92,7 @@ def get_projects() -> list[ProjectEntry]:
 
     result = subprocess.run(
         args=f"ledger -f {ledger_time_file} accounts {projects_root_account} --uncleared",
-        shell=True, capture_output=True, text=True
+        shell=True, capture_output=True, text=True, check=False
     )
 
     lines = filter(None, result.stdout.splitlines())

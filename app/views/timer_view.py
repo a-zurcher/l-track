@@ -1,17 +1,19 @@
-from rich.text import Text
-from textual.screen import Screen
-from textual.widgets import Static, Button, Label, Digits
-from textual.reactive import reactive
-from textual.timer import Timer
-from textual.containers import Horizontal, Container
-from textual.app import ComposeResult
+from typing import ClassVar
 
-from models import ProjectEntry, format_time
-from views.DescriptionPromptView import DescriptionPromptView
+from rich.text import Text
+from textual.app import ComposeResult
+from textual.containers import Container, Horizontal
+from textual.reactive import reactive
+from textual.screen import Screen
+from textual.timer import Timer
+from textual.widgets import Button, Digits, Label, Static
+
+from app.models import ProjectEntry, format_time
+from app.views.description_prompt_view import DescriptionPromptView
 
 
 class TimerView(Screen):
-    BINDINGS = [("space", "toggle", "Start/Stop")]
+    BINDINGS: ClassVar = [("space", "toggle", "Start/Stop")]
 
     CSS = """
         TimerView { 
@@ -107,17 +109,17 @@ class TimerView(Screen):
 
             self.timer_display_update(time)
 
-    def toggle_timer_set_text(self, **kwargs):
+    def toggle_timer_set_text(self):
         self.toggle_timer_button.label = "Resume" if not self.running else "Pause"
         self.toggle_timer_button.variant = "primary" if not self.running else "default"
 
-    def action_toggle(self, attribute_name: str):
+    def toggle_timer(self):
         self.running = not self.running
         self.toggle_timer_set_text()
 
     def on_button_pressed(self, event: Button.Pressed):
         if event.button.id == "toggle_btn":
-            self.action_toggle()
+            self.toggle_timer()
         elif event.button.id == "stop_btn":
             self.ask_description()
 

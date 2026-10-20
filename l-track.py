@@ -1,14 +1,16 @@
+from typing import ClassVar
+
 from textual.app import App
 
-from views.DescriptionPromptView import DescriptionPromptView
-from views.ProjectSelectorView import ProjectSelectorView
-from views.TimerView import TimerView
+from app.views.description_prompt_view import DescriptionPromptView
+from app.views.project_selector_view import ProjectSelectorView
+from app.views.timer_view import TimerView
 
 
 class ProjectTimerApp(App):
     TITLE = "Project Tracker"
-    CSS_PATH = "app.tcss"
-    SCREENS = {
+    CSS_PATH = "app/app.tcss"
+    SCREENS: ClassVar = {
         "project-selector": ProjectSelectorView,
         "timer": TimerView,
         "description-prompt": DescriptionPromptView

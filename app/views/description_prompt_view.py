@@ -1,13 +1,15 @@
+from typing import ClassVar
+
 from textual.app import ComposeResult
 from textual.containers import Container
 from textual.screen import Screen
-from textual.widgets import Input, Static, Button
+from textual.widgets import Button, Input, Static
 
-from models import ProjectEntry, ledger_time_file
+from app.models import ProjectEntry, ledger_time_file
 
 
 class DescriptionPromptView(Screen):
-    BINDINGS = [("submit", "save_project", "Save to ledger file")]
+    BINDINGS: ClassVar = [("submit", "save_project", "Save to ledger file")]
 
     CSS = """
         Input { width: 52; }

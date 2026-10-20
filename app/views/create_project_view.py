@@ -1,12 +1,13 @@
-from datetime import datetime
+import datetime
+from typing import ClassVar
 
-from textual.containers import Vertical, Horizontal, Container
+from textual.containers import Container, Horizontal, Vertical
 from textual.screen import Screen
-from textual.validation import Validator, ValidationResult
-from textual.widgets import Input, Button, Label
+from textual.validation import ValidationResult, Validator
+from textual.widgets import Button, Input, Label
 
-from models import ProjectEntry
-from views.TimerView import TimerView
+from app.models import ProjectEntry
+from app.views.timer_view import TimerView
 
 
 class ValidateNotEmpty(Validator):
@@ -23,7 +24,7 @@ class ValidateDate(Validator):
             return self.failure("Field cannot be empty")
         else:
             try:
-                datetime.strptime(value, "%Y-%m-%d")
+                datetime.datetime.strptime(value, "%Y-%m-%d").replace(tzinfo=datetime.UTC)
                 return self.success()
             except Exception:
                 return self.failure("Wrong date format, should be YYYY-MM-DD")
@@ -31,7 +32,7 @@ class ValidateDate(Validator):
 
 
 class CreateProjectView(Screen):
-    BINDINGS = [("submit", "start_timer_with_new_project", "Create a new project")]
+    BINDINGS: ClassVar = [("submit", "start_timer_with_new_project", "Create a new project")]
 
     CSS = """
         #form { 
@@ -90,14 +91,16 @@ class CreateProjectView(Screen):
 
         for input_widget in [self.date_input, self.client_input, self.project_name_input]:
             result = input_widget.validate(input_widget.value)
-            if not result.is_valid: all_inputs_valid = False
+            if result is None or not result.is_valid: all_inputs_valid = False
 
         if not all_inputs_valid: return
 
         project = ProjectEntry(
             client=self.client_input.value,
             name=self.project_name_input.value,
-            date=datetime.strptime(self.date_input.value, "%Y-%m-%d").date(),
+            date=datetime.datetime.strptime(self.date_input.value, "%Y-%m-%d")
+                .replace(tzinfo=datetime.UTC)
+                .date(),
         )
 
         self.app.push_screen(TimerView(project))

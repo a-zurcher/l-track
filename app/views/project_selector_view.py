@@ -1,15 +1,16 @@
 from dataclasses import dataclass
+from typing import ClassVar
 
 from rich.text import Text
 from textual.app import ComposeResult
-from textual.widgets import DataTable, Button, Label
-from textual.containers import Vertical, Horizontal
+from textual.containers import Horizontal, Vertical
 from textual.screen import Screen
-from textual.widgets._data_table import RowKey, ColumnKey
+from textual.widgets import Button, DataTable, Label
+from textual.widgets.data_table import ColumnKey, RowKey
 
-from models import get_projects, ProjectEntry, format_time, LedgerTimeFileEnvNotSet
-from views.CreateProjectView import CreateProjectView
-from views.TimerView import TimerView
+from app.models import LedgerTimeFileEnvNotSet, ProjectEntry, format_time, get_projects
+from app.views.create_project_view import CreateProjectView
+from app.views.timer_view import TimerView
 
 
 @dataclass
@@ -34,7 +35,7 @@ class ProjectSelectorView(Screen):
     columns: list[ColumnKey]
 
     # used to manage sorting
-    table_headers: list[SortedTableHeader] = [
+    table_headers: ClassVar[list[SortedTableHeader]] = [
         SortedTableHeader("Date"),
         SortedTableHeader("Client"),
         SortedTableHeader("Project"),
@@ -42,7 +43,7 @@ class ProjectSelectorView(Screen):
     ]
 
     # stores all the projects in a dict as values with RowKey as keys
-    table_rows: dict[RowKey, ProjectEntry] = {}
+    table_rows: ClassVar[dict[RowKey, ProjectEntry]] = {}
 
     def __init__(self):
         super().__init__(name='project_selector')
