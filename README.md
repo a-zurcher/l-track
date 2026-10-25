@@ -1,4 +1,4 @@
-# `l-track
+# `l-track`
 
 Track your projects in the terminal using [ledger-cli](https://ledger-cli.org/) file format.
 
