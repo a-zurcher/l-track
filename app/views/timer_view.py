@@ -13,7 +13,7 @@ from app.views.description_prompt_view import DescriptionPromptView
 
 
 class TimerView(Screen):
-    BINDINGS: ClassVar = [("space", "toggle", "Start/Stop")]
+    BINDINGS = [("space", "toggle", "Start/Stop")]
 
     CSS = """
         TimerView { 
@@ -113,13 +113,13 @@ class TimerView(Screen):
         self.toggle_timer_button.label = "Resume" if not self.running else "Pause"
         self.toggle_timer_button.variant = "primary" if not self.running else "default"
 
-    def toggle_timer(self):
+    def action_toggle(self, **kwargs):
         self.running = not self.running
         self.toggle_timer_set_text()
 
     def on_button_pressed(self, event: Button.Pressed):
         if event.button.id == "toggle_btn":
-            self.toggle_timer()
+            self.action_toggle()
         elif event.button.id == "stop_btn":
             self.ask_description()
 
