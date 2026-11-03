@@ -1,6 +1,6 @@
 version = 1
-revision = 5
-requires-python = "==3.14.*"
+revision = 3
+requires-python = ">=3.15"
 
 [options]
 exclude-newer = "0001-01-01T00:00:00Z" # This has no effect and is included for backwards compatibility when using relative exclude-newer values.
@@ -8,7 +8,7 @@ exclude-newer-span = "P7D"
 
 [[package]]
 name = "ledger-project-tracker"
-version = "1.0.0"
+version = "1.0.1"
 source = { virtual = "." }
 dependencies = [
     { name = "rich" },
@@ -17,8 +17,8 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "rich", specifier = ">=15.0.0" },
-    { name = "textual", specifier = ">=8.2" },
+    { name = "rich", specifier = "==15.0.0" },
+    { name = "textual", specifier = "==8.2.8" },
 ]
 
 [[package]]
@@ -70,11 +70,11 @@ wheels = [
 
 [[package]]
 name = "platformdirs"
-version = "4.13.0"
+version = "4.13.6"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/80/a8/66d45abadff219e36e2a824181b8f6a67e7ed4572934d6252c71c29d5731/platformdirs-4.13.0.tar.gz", hash = "sha256:1aa0b0d3f224c1f07c295121e312a5a24a180d6ae5a8425ea1784b3e3863e9c0", size = 61094, upload-time = "2026-10-11T02:05:24.109Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/1a/43/8c4b5fe23f0e119cf4e1b16c2d16240ab9057cdbb138568c91d5a48abf81/platformdirs-4.13.6.tar.gz", hash = "sha256:211d176e24674b5895dedf9021c262bcf9fad008a70610bfb147d4a8d6d8fe1b", size = 62750, upload-time = "2026-10-27T08:19:11.538Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8d/15/1633010b26e88e872c93b67c0b6c5e174fb74cb6fb5c1472b4d51d4a8f22/platformdirs-4.13.0-py3-none-any.whl", hash = "sha256:3dbcf4cd708f21cf876c4eaa90e58412bc4f033d87143f41b1493ff77c25b7e1", size = 32724, upload-time = "2026-10-11T02:05:22.776Z" },
+    { url = "https://files.pythonhosted.org/packages/a8/24/b312a9466839b1f708eed42790b47e927dc7f774a528bb49b1cdf8b734b9/platformdirs-4.13.6-py3-none-any.whl", hash = "sha256:21fc198fb09f3e78cadcdfd8a6ae4fd65cadc64a3cba78b694321c2996114a3e", size = 32767, upload-time = "2026-10-27T08:19:10.405Z" },
 ]
 
 [[package]]
